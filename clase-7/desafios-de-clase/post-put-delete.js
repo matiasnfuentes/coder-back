@@ -22,38 +22,33 @@ const server = app.listen(PORT, () => {
 });
 server.on("error", (error) => console.log(`Error en servidor ${error}`));
 
-let frase = "Frase inicial";
+let frase = ["Frase", "inicial"];
 
 app.get("/frase", (req, res) => {
-  res.send({ frase });
+  res.send({ frase: frase.join(" ") });
 });
 
 app.get("/palabras/:pos", (req, res) => {
-  const numeroDeLetra = req.params.pos;
-  res.send({ buscada: frase.split(" ")[numeroDeLetra] });
+  const numeroDePalabra = req.params.pos - 1;
+  res.send({ buscada: frase[numeroDePalabra] });
 });
 
 app.post("/palabras", (req, res) => {
   const palabraAAgregar = req.body.palabra;
-  frase += ` ${palabraAAgregar}`;
-  const posicion = frase.split(" ").length - 1;
+  const posicion = frase.push(palabraAAgregar);
   res.send({ agregada: palabraAAgregar, posicion });
 });
 
 app.post("/palabras/:pos", (req, res) => {
-  const posicion = parseInt(req.params.pos);
+  const posicion = req.params.pos - 1;
   const palabraAAgregar = req.body.palabra;
-  const palabras = frase.split(" ");
-  const anterior = palabras[posicion];
-  palabras.splice(posicion, 1, palabraAAgregar);
-  frase = palabras.join(" ");
+  const anterior = frase[posicion];
+  frase.splice(posicion, 1, palabraAAgregar);
   res.send({ actualizada: palabraAAgregar, anterior });
 });
 
 app.delete("/palabras/:pos", (req, res) => {
-  const posicion = parseInt(req.params.pos);
-  const palabras = frase.split(" ");
-  palabras.splice(posicion, 1);
-  frase = palabras.join(" ");
+  const posicion = req.params.pos - 1;
+  frase.splice(posicion, 1);
   res.send("eliminada ok");
 });
