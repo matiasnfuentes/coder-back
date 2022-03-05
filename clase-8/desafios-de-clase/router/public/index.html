@@ -1,0 +1,48 @@
+<!-- 
+Persona -> { "nombre": ..., "apellido": ..., "edad":... }
+Mascota -> { "nombre":..., "raza":..., "edad":... } 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>HOLA MUNDO!</h1>
+    <div>
+        <h2>Personas</h2>
+        <div>
+            <form action="http://localhost:8080/personas" method="post">
+                <label for="nombre">Nombre: </label>
+                <input name="nombre" type="text">
+                <label for="apellido">Apellido: </label>
+                <input name="apellido" type="text">
+                <label for="edad">Edad: </label>
+                <input name="edad" type=" text">
+                <button type="submit">Enviar datos</button>
+            </form>
+        </div>
+    </div>
+    <div>
+        <h2>Mascotas</h2>
+        <div>
+            <form action="http://localhost:8080/mascotas" method="post">
+                <label for="nombre">Nombre: </label>
+                <input name="nombre" type="text">
+                <label for="raza">Raza: </label>
+                <input name="raza" type="text">
+                <label for="edad">Edad: </label>
+                <input name="edad" type=" text">
+                <button type="submit">Enviar datos</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
