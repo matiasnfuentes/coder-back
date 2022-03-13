@@ -1,0 +1,19 @@
+<style>
+    .ancho {
+        width: 200px;
+    }
+
+    .medidores {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between
+    }
+</style>
+<div class="ancho">
+    <meter class="ancho" min=<%= minimo %> max=<%= maximo%> value=<%= valor %>></meter>
+    <div class="medidores">
+        <p><%= minimo %></p>
+        <p><%= maximo %></p>
+    </div>
+
+</div>

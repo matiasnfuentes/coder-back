@@ -1,0 +1,19 @@
+<h1 class="text-primary">
+    Ingrese datos
+</h1>
+<form class="col-8" action="/productos" method="post">
+    <div class="mb-3">
+        <label for="title" class="form-label">Nombre del producto: </label>
+        <input type="text" class="form-control" id="title" name="title">
+    </div>
+    <div class="mb-3">
+        <label for="price" class="form-label">Precio: </label>
+        <input type="text" class="form-control" id="price" name="price">
+    </div>
+    <div class="mb-3">
+        <label for="thumbnail" class="form-label">Thumbnail: </label>
+        <input type="text" class="form-control" id="thumbnail" name="thumbnail">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<a class="btn btn-primary" href="http://localhost:8080/productos">Ir al productos</a>
