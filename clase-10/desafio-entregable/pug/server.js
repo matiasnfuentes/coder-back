@@ -39,7 +39,6 @@ app.get("/productos", (req, res) => {
     const productos = response.data;
     res.render("./productos.pug", {
       productos,
-      partial: "table",
     });
   });
 });
