@@ -5,32 +5,31 @@ document.getElementById("texto").addEventListener("input", (e) => {
   console.log(e.target.value);
 });
 
-document.getElementById("enviar").addEventListener("click", (e) => {
+document.getElementById("enviar").addEventListener("submit", (e) => {
   e.preventDefault();
   const texto = document.getElementById("texto");
   socket.emit("enviar", texto.value);
   texto.value = "";
 });
 
+const renderChatBlock = (data) => {
+  const chatBlock = document.createElement("div");
+  chatBlock.innerHTML = `
+      <h2 ${data.socketId === socket.id && "style='color: blue'"}>${
+    data.socketId
+  } :</h2>
+      <p id="${data.messageId}">${data.mensaje}</p>`;
+  document.getElementById("chat").appendChild(chatBlock);
+};
+
 socket.on("connected", (data) => {
-  const chat = document.getElementById("chat");
-  data.forEach((m) => {
-    const chatBlock = document.createElement("div");
-    chatBlock.innerHTML = `
-        <h2>${m.socketId} :</h2>
-        <p id="${m.messageId}">${m.mensaje}</p>`;
-    document.getElementById("chat").appendChild(chatBlock);
-  });
+  data.forEach((m) => renderChatBlock(m));
 });
 
 socket.on("mensajeGlobal", (data) => {
   let currentMessage = document.getElementById(data.messageId);
   if (!currentMessage) {
-    const chatBlock = document.createElement("div");
-    chatBlock.innerHTML = `
-        <h2>${data.socketId} :</h2>
-        <p id="${data.messageId}">${data.mensaje}</p>`;
-    document.getElementById("chat").appendChild(chatBlock);
+    renderChatBlock(data);
   } else {
     currentMessage.innerHTML = data.mensaje;
   }

@@ -11,8 +11,10 @@
 <body>
     <h1>Web Sockets</h1>
     <div id="chat">
-        <input type="text" name="texto" id="texto">
-        <button id="enviar" type="submit" value="Submit">Submit</button>
+        <form id="enviar" action="">
+            <input type="text" name="texto" id="texto">
+            <button type="submit" value="Submit">Submit</button>
+        </form>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./index.js"></script>
