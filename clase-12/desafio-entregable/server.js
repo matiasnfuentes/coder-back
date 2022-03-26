@@ -1,5 +1,5 @@
 const { api } = require("./api/api");
-const fs = require("fs");
+const { sendInitialData, saveMessage } = require("./helpers");
 const axios = require("axios");
 const hbs = require("hbs");
 const express = require("express");
@@ -30,17 +30,7 @@ io.on("connection", (socket) => {
   console.log("¡Nuevo cliente conectado!");
 
   // Envio los datos inciales
-  axios.get("http://localhost:8080/api/productos").then((respuestaDeApi) => {
-    fs.promises
-      .readFile("./data/messages.txt", "utf-8")
-      .then((respuestaDelArchivo) => {
-        const mensajes = JSON.parse(respuestaDelArchivo);
-        socket.emit("connected", {
-          mensajes,
-          productos: respuestaDeApi.data,
-        });
-      });
-  });
+  sendInitialData(socket);
 
   // Manipulación de productos
 
@@ -58,14 +48,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("nuevoMensaje", (data) => {
-    fs.promises
-      .readFile("./data/messages.txt", "utf-8")
-      .then((respuestaDelArchivo) => {
-        const mensajes = JSON.parse(respuestaDelArchivo);
-        mensajes.push(data);
-        fs.promises.writeFile("./data/messages.txt", JSON.stringify(mensajes));
-      });
-
+    saveMessage(data);
     io.sockets.emit("mensajeRecibo", data);
   });
 });
