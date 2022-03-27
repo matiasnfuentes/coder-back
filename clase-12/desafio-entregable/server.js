@@ -1,7 +1,6 @@
 const { api } = require("./api/api");
 const { sendInitialData, saveMessage } = require("./helpers");
 const axios = require("axios");
-const hbs = require("hbs");
 const express = require("express");
 const { Server: IOServer } = require("socket.io");
 const { Server: HttpServer } = require("http");
@@ -14,11 +13,6 @@ const PORT = 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Motor de plantilla
-hbs.registerPartials(__dirname + "/views/partials/", function (err) {});
-app.set("view engine", "hbs");
-app.set("views", __dirname + "/views");
 
 // Routes
 app.use("/api/productos", api);
