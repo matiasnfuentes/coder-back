@@ -37,7 +37,7 @@ document.getElementById("formulario-mensaje").onsubmit = (e) => {
 
 // Sockets operations
 
-let template;
+let tablaTemplate;
 
 const actualizarTabla = (productos, template) => {
   const html = template({ productos });
@@ -51,18 +51,14 @@ const renderChatBlock = (data) => {
   document.getElementById("mensajes").appendChild(chatBlock);
 };
 
-socket.on("connected", ({ productos, mensajes }) => {
-  fetch("http://localhost:8080/views/tabla.hbs")
-    .then((response) => response.text())
-    .then((data) => {
-      template = Handlebars.compile(data);
-      actualizarTabla(productos, template);
-    });
+socket.on("connected", ({ productos, mensajes, template }) => {
+  tablaTemplate = Handlebars.compile(template);
+  actualizarTabla(productos, tablaTemplate);
   mensajes.forEach((m) => renderChatBlock(m));
 });
 
 socket.on("productosActualizados", ({ productos }) => {
-  actualizarTabla(productos, template);
+  actualizarTabla(productos, tablaTemplate);
 });
 
 socket.on("mensajeRecibo", (data) => {
