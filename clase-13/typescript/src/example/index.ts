@@ -17,3 +17,4 @@ const azul: number = generarColorAleatorio();
 const RGB: string = `(${red}, ${green}, ${azul})`;
 
 console.log(RGB);
+export {};
