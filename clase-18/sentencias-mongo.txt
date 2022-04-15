@@ -24,3 +24,20 @@ db.productos.estimatedDocumentCount()
 5.
 
     a.db.productos.insertOne({title: "titulo11", price: "100", thumbnail: "http://imagen11.com" })
+    
+    b. i)   db.productos.find({price: {$lt: 1000}})
+       ii)  db.productos.find({$and: [{price: {$gte: 1000}}, {price: {$lte: 3000}}]})
+       iii) db.productos.find({price: {$gt: 3000}})
+       iv)  db.productos.find({},{title: 1}).limit(1).skip(2).sort({price: 1})
+    
+    c.  db.productos.updateMany({},{$set: {stock: 100}})
+
+    d.  db.productos.updateMany({price: {$gte: 4000}},{$set: {stock: 100}})
+
+    e. db.productos.deleteMany({price: {$lte: 1000}})
+    
+    Listar los productos con precio entre los 1000 a 3000 pesos.
+
+6. 
+
+    db.createUser({user: "pepe", pwd: "asd456", roles: [{role: "read", db: "ecommerce" }]})
