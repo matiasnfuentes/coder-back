@@ -1,0 +1,26 @@
+0. 
+
+use ecommerce
+db.createCollection("mensajes")
+db.createCollection("productos")
+
+1 y 2.  
+
+db.productos.insertMany([{title: "titulo1", price: 100, thumbnail: "http://imagen1.com" },{title: "titulo2", price: 200, thumbnail: "http://imagen2.com" },{title: "titulo3", price: 300, thumbnail: "http://imagen3.com" },{title: "titulo4", price: 400, thumbnail: "http://imagen4.com" },{title: "titulo5", price: 500, thumbnail: "http://imagen5.com" },{title: "titulo6", price: 600, thumbnail: "http://imagen6.com" },{title: "titulo7", price: 700, thumbnail: "http://imagen7.com" },{title: "titulo8", price: 800, thumbnail: "http://imagen8.com" },{title: "titulo9", price: 900, thumbnail: "http://imagen9.com" },{title: "titulo10", price: 1000, thumbnail: "http://imagen10.com" }])
+
+db.mensajes.insertMany([{mensaje: "Mensaje 1", mail: "mail1@gmail.com"},{mensaje: "Mensaje 2", mail: "mail2@gmail.com"},{mensaje: "Mensaje 3", mail: "mail3@gmail.com"},{mensaje: "Mensaje 4", mail: "mail4@gmail.com"},{mensaje: "Mensaje 5", mail: "mail5@gmail.com"},{mensaje: "Mensaje 6", mail: "mail6@gmail.com"},{mensaje: "Mensaje 7", mail: "mail7@gmail.com"},{mensaje: "Mensaje 8", mail: "mail8@gmail.com"},{mensaje: "Mensaje 9", mail: "mail9@gmail.com"},{mensaje: "Mensaje 10", mail: "mail10@gmail.com"}])
+
+
+3.
+
+db.mensajes.find()
+db.productos.find()
+
+4. 
+
+db.mensajes.estimatedDocumentCount()
+db.productos.estimatedDocumentCount()
+
+5.
+
+    a.db.productos.insertOne({title: "titulo11", price: "100", thumbnail: "http://imagen11.com" })
