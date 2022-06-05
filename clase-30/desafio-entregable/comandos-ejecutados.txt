@@ -1,0 +1,58 @@
+Utilización del servidor:
+
+Ya que el servidor está implementado en typescript, antes de intentar levantar el servidor hay que
+buildear el mismo ejecutando el comando "npm run build". El archivo hay que hay que aputar
+es ./dist/main.js. Se pueden pasar 3 parámetros por línea de comando:
+
+--port -> número del puerto del servidor.
+--mode -> 
+	* CLUSTER: levanta el servidor en modo cluster, utilizando dicho módulo.
+	* FORK: forkea 1 proceso por cada núcleo del procesador utilizando child_process.fork
+	* EXTERNAL: Deja que un módulo externo maneje el servidor (por ejemplo PM2)
+--child -> indica que es un proceso hijo.
+
+
+
+Ejecutar el servidor (modos FORK y CLUSTER) con nodemon verificando el número de procesos tomados por node:
+
+nodemon ./dist/main.js --port 8080 --mode FORK
+nodemon ./dist/main.js --port 8080 --mode CLUSTER
+
+Ejecutar el servidor (con los parámetros adecuados) utilizando Forever, verificando su correcta operación. 
+Listar los procesos por Forever y por sistema operativo
+
+forever ./dist/main.js --port 8080 --mode FORK
+forever ./dist/main.js --port 8080 --mode CLUSTER
+
+Listado de procesos con forever: "forever list"
+
+(node:23184) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23184) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+info:    Forever processes running
+data:        uid  command              script                                                                                                 forever pid   id logfile                           uptime      
+data:    [0] 0Kiq "D:\NodeJS\node.exe" D:\Mati\CoderHouse\Back\coder-back\clase-30\desafio-entregable\dist\main.js --port 8080 --mode CLUSTER 23316   22852    C:\Users\Matias\.forever\0Kiq.log 0:0:0:30.63
+
+Listado de procesos con el SO:  'tasklist /fi "imagename eq node.exe"'
+
+Image Name                     PID Session Name        Session#    Mem Usage
+========================= ======== ================ =========== ============
+node.exe                     23316 Console                    3     32,436 K
+node.exe                     22852 Console                    3     80,384 K
+node.exe                     23252 Console                    3     81,196 K
+node.exe                     21528 Console                    3     82,752 K
+node.exe                     23248 Console                    3     81,020 K
+node.exe                     21936 Console                    3     82,232 K
+node.exe                     16580 Console                    3     82,100 K
+node.exe                     22992 Console                    3     81,984 K
+node.exe                     20980 Console                    3     82,252 K
+node.exe                     21920 Console                    3     81,272 K
+
+
+Ejecutar el servidor (con los parámetros adecuados: modo FORK) utilizando PM2 en sus modos modo fork y cluster. Listar los procesos por PM2 y por sistema operativo.
+
+Modo fork:
+pm2 start ./dist/main.js --name="server1" --watch -- --port 8080 --mode EXTERNAL
+
+Modo cluster:
+pm2 start ./dist/main.js --name="server1" --watch -i max -- --port 8080 --mode EXTERNAL
