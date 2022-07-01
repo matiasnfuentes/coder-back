@@ -1,33 +1,38 @@
 import express from "express";
-import { MensajeDAO } from "../persistencia/mensajeDAO";
-import { faker } from "faker-js";
-import { Mensaje, Producto } from "../modelo/types";
+import { MensajeDAO } from "../../persistencia/mensajeDAO";
+import { faker } from "@faker-js/faker";
+import { Mensaje, Producto } from "../../modelo/types";
 import { normalize, schema } from "normalizr";
-//import { fork } from "child_process";
-import { logger } from "../logger";
+import { logger } from "../../logger";
+import { carrito } from "./carrito";
 
 faker.locale = "es";
 
 const { Router } = express;
 
 export const api = Router();
-
+api.use("/carrito", carrito);
 const mensajesDAO = new MensajeDAO();
 
 // Fake api
-const generarProducto = (): Producto => {
+const generarProducto = (id): Producto => {
   const producto: Producto = {
-    title: faker.commerce.product(),
-    price: faker.finance.amount(),
-    thumbnail: faker.image.avatar(),
+    id: Math.round(Math.random() * 10000000).toString(),
+    descripcion: "un produc",
+    codigo: "ABC" + Math.round(Math.random() * 10000000).toString(),
+    stock: Math.ceil(Math.random() * 10),
+    nombre: faker.commerce.product(),
+    precio: parseFloat(faker.finance.amount()),
+    foto: faker.image.avatar(),
   };
+
   return producto;
 };
 
 const getProductos = (): Producto[] => {
   const productos: Producto[] = [];
   for (let i = 0; i < 5; i++) {
-    productos.push(generarProducto());
+    productos.push(generarProducto(i));
   }
   return productos;
 };
@@ -77,14 +82,4 @@ api.post("/mensajes", async (req, res) => {
     logger.error(e);
     res.status(500).send("Error al guardar los mensajes");
   }
-});
-
-api.get("/randoms", async (req, res) => {
-  /*console.log(`randoms en ${process.pid} y ${process.argv}`);
-  const { cant } = req.query;
-  const forked = fork(__dirname + "/../src/random/randomNumbers.js");
-  forked.send(cant || 100000000);
-  forked.on("message", (msg) => {
-    res.send(msg);
-  });*/
 });

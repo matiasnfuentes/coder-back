@@ -6,6 +6,11 @@ declare global {
       JWT_SECRET: string;
       FORK: boolean;
       DOMAIN: string;
+      PORT: number;
+      TWILIO_SID: string;
+      TWILIO_AUTHTOKEN: string;
+      ADMIN_EMAIL: string;
+      ADMIN_EMAIL_PASS: string;
     }
   }
 }
