@@ -15,7 +15,7 @@ export class MongoDAO<T extends Serializable> implements DAO<T> {
   async get(id: string): Promise<T> {
     const element = await this.model.findById(id);
     if (!element) throw { status: 404, error: `El producto ${id} no existe` };
-    return element;
+    return element.toObject();
   }
 
   async getBy(field: string, value: string | number): Promise<T> {
@@ -32,8 +32,8 @@ export class MongoDAO<T extends Serializable> implements DAO<T> {
     const elementToSave = new this.model({
       ...elementoAGuardar,
     });
-    await elementToSave.save();
-    return elementToSave;
+
+    return await elementToSave.save();
   }
 
   async delete(id: string): Promise<void> {
@@ -44,7 +44,7 @@ export class MongoDAO<T extends Serializable> implements DAO<T> {
     await this.model.findOneAndDelete({ [field]: value });
   }
 
-  async modificar(id: string, modificacion: Partial<T>): Promise<T> {
+  async update(id: string, modificacion: Partial<T>): Promise<T> {
     await this.model.findByIdAndUpdate(id, modificacion);
     const p = await this.get(id);
     return p;
